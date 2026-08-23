@@ -1,0 +1,1 @@
+// Purpose: dashboard application entrypoint.

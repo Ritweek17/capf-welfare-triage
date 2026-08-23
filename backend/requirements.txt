@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+python-jose[cryptography]
+pydantic
+pandas
+numpy
+scikit-learn
+pytest
+faker
