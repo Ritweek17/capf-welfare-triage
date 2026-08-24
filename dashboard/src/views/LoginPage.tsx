@@ -82,7 +82,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
           ? "COMMANDER"
           : selectedRole === "Welfare Officer"
             ? "WELFARE_OFFICER"
-            : selectedRole === "Personal"
+            : selectedRole === "Personnel"
               ? "PERSONNEL"
               : undefined;
 
@@ -210,7 +210,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
             <div>
               <Check size={15} />
-              Personal Baselines
+              Personnel Baselines
             </div>
 
             <div>
@@ -246,7 +246,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               </div>
 
               <small>
-                PERSONAL
+                PERSONNEL
               </small>
 
               <strong>
@@ -410,7 +410,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               </div>
 
               <p className="portalAccessHint">
-                Commander and Welfare Officer accounts may choose Personal for their own private welfare space. Official portals remain role restricted.
+                Commander and Welfare Officer accounts may choose Personnel for their own private welfare space. Official portals remain role restricted.
               </p>
 
             </div>

@@ -5,7 +5,7 @@ const DEFAULT_COMMANDER_DASHBOARD_URL =
 const DEFAULT_WELFARE_DASHBOARD_URL =
   "http://localhost:3000/";
 const DEFAULT_PERSONNEL_DASHBOARD_URL =
-  "http://localhost:3000/personal";
+  "http://localhost:3000/personnel";
 
 const dashboardUrls: Partial<Record<UserRole, string>> = {
   COMMANDER:
