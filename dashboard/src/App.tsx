@@ -1,7 +1,9 @@
 import React from "react";
 import { useAuth } from "./auth/useAuth";
 import LoginPage from "./views/LoginPage";
+import CommanderView from "./views/CommanderView";
 import PersonnelView from "./views/PersonnelView";
+import WelfareOfficerView from "./views/WelfareOfficerView";
 
 function AuthenticatedShell({
   children,
@@ -117,10 +119,10 @@ export default function App() {
   let view = <LoginPage onLogin={login} />;
   switch (session.role) {
     case "COMMANDER":
-      view = <DashboardPending role="COMMANDER" onBack={logout} />;
+      view = <CommanderView />;
       break;
     case "WELFARE_OFFICER":
-      view = <DashboardPending role="WELFARE_OFFICER" onBack={logout} />;
+      view = <WelfareOfficerView />;
       break;
     case "PERSONNEL":
       view = <PersonnelView />;
