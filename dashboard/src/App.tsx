@@ -1,7 +1,8 @@
 import React from "react";
 import { useAuth } from "./auth/useAuth";
+import { getDashboardUrl } from "./config/dashboardRoutes";
 import LoginPage from "./views/LoginPage";
-import PersonnelView from "./views/PersonnelView";
+import type { UserRole } from "./types/auth";
 
 function AuthenticatedShell({
   children,
@@ -55,25 +56,34 @@ function AuthenticatedShell({
   );
 }
 
-function DashboardPending({ role, onBack }: { role: string; onBack: () => void }) {
+function DashboardRedirect({ role }: { role: UserRole }) {
+  const dashboardUrl = getDashboardUrl(role);
+
+  React.useEffect(() => {
+    if (dashboardUrl) {
+      window.location.replace(dashboardUrl);
+    }
+  }, [dashboardUrl]);
+
   return (
-    <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem", alignItems: "flex-start" }}>
-      <div>{role} dashboard integration pending.</div>
-      <button
-        onClick={onBack}
-        style={{
-          padding: "0.5rem 1rem",
-          backgroundColor: "#334155",
-          color: "white",
-          border: "none",
-          borderRadius: "0.25rem",
-          cursor: "pointer"
-        }}
-        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#475569")}
-        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#334155")}
-      >
-        Go Back
-      </button>
+    <div
+      role="status"
+      aria-live="polite"
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        placeItems: "center",
+        backgroundColor: "#0f172a",
+        color: "#f8fafc",
+        fontFamily: "Inter, system-ui, sans-serif",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <strong>Access verified</strong>
+        <p style={{ color: "#94a3b8" }}>
+          Opening your authorized dashboard...
+        </p>
+      </div>
     </div>
   );
 }
@@ -117,14 +127,11 @@ export default function App() {
   let view = <LoginPage onLogin={login} />;
   switch (session.role) {
     case "COMMANDER":
-      view = <DashboardPending role="COMMANDER" onBack={logout} />;
-      break;
+      return <DashboardRedirect role="COMMANDER" />;
     case "WELFARE_OFFICER":
-      view = <DashboardPending role="WELFARE_OFFICER" onBack={logout} />;
-      break;
+      return <DashboardRedirect role="WELFARE_OFFICER" />;
     case "PERSONNEL":
-      view = <PersonnelView />;
-      break;
+      return <DashboardRedirect role="PERSONNEL" />;
   }
 
   return (
