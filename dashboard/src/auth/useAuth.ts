@@ -62,11 +62,11 @@ export function useAuth() {
     ) {
       const portalName = requestedPortal === "COMMANDER" ? "Commander" : "Welfare Officer";
       throw new Error(
-        `This account does not have ${portalName} access. Select Personal to open your private dashboard.`
+        `This account does not have ${portalName} access. Select Personnel to open your private dashboard.`
       );
     }
 
-    // Every authenticated member can use the private Personal portal.
+    // Every authenticated member can use the private Personnel portal.
     // Privileged Commander/Welfare access still requires the matching role.
     const effectiveRole = requestedPortal === "PERSONNEL"
       ? "PERSONNEL"
