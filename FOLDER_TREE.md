@@ -1,6 +1,6 @@
 # Folder Tree — Minimum Files for a Working Demo
 
-Note: Commander and Welfare Officer are **one dashboard app** with role-conditional rendering — there is only one `/dashboard` folder, not two.
+Note: Commander, Welfare Officer, and Personnel are **one responsive dashboard app** with role-conditional rendering — there is only one `/dashboard` folder and no separate mobile app.
 
 ```
 /repo-root
@@ -47,28 +47,19 @@ Note: Commander and Welfare Officer are **one dashboard app** with role-conditio
 │   ├── package.json
 │   ├── src/
 │   │   ├── main.tsx
-│   │   ├── App.tsx                  # reads role from JWT, routes to the right view
+│   │   ├── App.tsx                  # reads role from JWT, routes to the right role view
 │   │   ├── api/client.ts            # typed fetch wrapper matching API_CONTRACTS.md
 │   │   ├── auth/useAuth.ts          # decodes JWT, exposes role + person_id
 │   │   ├── views/
 │   │   │   ├── CommanderView.tsx    # aggregate trend charts only
-│   │   │   └── WelfareOfficerView.tsx  # alert queue with reasons + action logging
+│   │   │   ├── WelfareOfficerView.tsx  # alert queue with reasons + action logging
+│   │   │   └── PersonnelView.tsx     # responsive self-check-in form
 │   │   └── components/
 │   │       ├── shared/
 │   │       │   ├── TrendChart.tsx
 │   │       │   ├── AlertCard.tsx
 │   │       │   └── Layout.tsx
 │   └── index.html
-│
-├── /mobile-app                      (React Native OR PWA — see ARCHITECTURE.md)
-│   ├── package.json
-│   ├── src/
-│   │   ├── App.tsx
-│   │   ├── screens/
-│   │   │   └── CheckInScreen.tsx    # mood scale + optional note + optional GMHAT-style Qs
-│   │   ├── api/client.ts            # POST /checkins, handles {"status": "received"} only
-│   │   └── auth/login.ts
-│   └── manifest.json                # PWA manifest if going the PWA route
 │
 ├── /data
 │   ├── generate_synthetic_data.py   # produces fields in DATA_SCHEMA.md

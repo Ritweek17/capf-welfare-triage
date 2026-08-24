@@ -87,6 +87,7 @@ Cold-start case (Decision 1):
 {
   "status": "baseline_building",
   "score": null,
+  "display_score": null,
   "flagged": false,
   "factors": []
 }
@@ -97,6 +98,7 @@ Scored case (Decision 4 — z > 2.0 triggers a flag):
 {
   "status": "scored",
   "score": 2.4,
+  "display_score": 60,
   "flagged": true,
   "factors": [
     {"factor": "leave_frequency", "deviation": "-60% vs personal baseline"},
@@ -119,6 +121,7 @@ Scored case (Decision 4 — z > 2.0 triggers a flag):
       "person_id": "p_00123",
       "flagged_at": "2026-08-23T09:00:00Z",
       "score": 2.4,
+      "display_score": 60,
       "factors": [
         {"factor": "leave_frequency", "deviation": "-60% vs personal baseline"},
         {"factor": "duty_hours", "deviation": "+40% vs personal baseline"}
@@ -129,6 +132,8 @@ Scored case (Decision 4 — z > 2.0 triggers a flag):
   ]
 }
 ```
+
+`display_score` is an integer from 0 to 100 computed as `min(100, round(z_score * 25))`; the flag threshold `z = 2.0` maps to `display_score = 50`. The raw `score` remains the z-score.
 
 **`POST /alerts/{alert_id}/log`** — welfare officer logs an outcome
 ```json
@@ -147,10 +152,12 @@ Scored case (Decision 4 — z > 2.0 triggers a flag):
 {
   "unit": "3rd Company",
   "trend_30d": [
-    {"date": "2026-07-24", "avg_risk_indicator": 0.8},
-    {"date": "2026-08-23", "avg_risk_indicator": 1.6}
+    {"date": "2026-07-24", "avg_risk_indicator": 0.8, "checkin_participation_rate": 78.0},
+    {"date": "2026-08-23", "avg_risk_indicator": 1.6, "checkin_participation_rate": 84.0}
   ],
   "open_alert_count": 4,
   "personnel_count": 87
 }
 ```
+
+`checkin_participation_rate` is the percentage of the unit that checked in on that day, from 0 to 100, alongside `avg_risk_indicator`.
