@@ -118,6 +118,7 @@ Scored case (Decision 4 — z > 2.0 triggers a flag):
 {
   "alerts": [
     {
+      "alert_id": "r_88213",
       "person_id": "p_00123",
       "flagged_at": "2026-08-23T09:00:00Z",
       "score": 2.4,
@@ -139,9 +140,15 @@ Scored case (Decision 4 — z > 2.0 triggers a flag):
 ```json
 {
   "action_taken": "informal_checkin_completed",
-  "notes": "Spoke with individual, referred to counseling voluntarily"
+  "notes": "Spoke with individual, referred to counseling voluntarily",
+  "status": "follow_up_scheduled",
+  "follow_up_date": "2026-08-30"
 }
 ```
+
+`status` is one of `reviewed`, `follow_up_scheduled`, or `closed`. The
+`follow_up_date` is optional and is used only when a human follow-up is
+scheduled.
 
 ---
 

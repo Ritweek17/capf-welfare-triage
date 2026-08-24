@@ -77,6 +77,36 @@ All data below is **entirely fake/generated** — no real personnel data is used
 | `timestamp` | datetime | |
 | `reason` | string, nullable | optional justification note |
 
+## `Alert` (derived from a flagged `RiskResult`)
+
+Alerts are not a separate raw-data source in the SQLite seed. The backend exposes
+the latest flagged `RiskResult` as an alert and uses its risk-result ID as
+`alert_id`.
+
+| Field | Type | Notes |
+|---|---|---|
+| `alert_id` | string | risk-result identifier |
+| `person_id` | string | exposed only to authorized Welfare Officers |
+| `flagged_at` | datetime | risk-result computation time |
+| `score` | float | never returned to the Personnel role |
+| `display_score` | int | welfare-officer presentation value |
+| `factors` | JSON | required contributing-factor list |
+| `suggested_tier` | string, nullable | non-diagnostic support recommendation |
+| `status` | string | e.g. `open`, `reviewed` |
+
+## `Intervention`
+
+| Field | Type | Notes |
+|---|---|---|
+| `id` | string (PK) | |
+| `alert_id` | string (FK) | references a flagged `RiskResult` |
+| `officer_id` | string (FK) | Welfare Officer who logged the outcome |
+| `action_taken` | string | human welfare action recorded |
+| `notes` | string, nullable | optional outcome notes |
+| `status` | string | current intervention state |
+| `follow_up_date` | date, nullable | optional human-scheduled follow-up |
+| `timestamp` | datetime | |
+
 ## Generator Notes for the Data Lead
 
 - Generate **~150 fake personnel** across 2–3 units, with **90 days** of `LeaveRecord`/`DutyRecord` history each, so most people clear the 14-day cold-start floor well before the demo.
