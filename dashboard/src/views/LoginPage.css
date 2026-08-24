@@ -1,0 +1,1339 @@
+:root {
+  --background: #f4f6f1;
+  --navy: #0b1424;
+  --navy-soft: #18263c;
+  --text: #101828;
+  --muted: #667085;
+  --lime: #a3e635;
+  --lime-dark: #78a91c;
+  --lime-light: #ecfccb;
+  --border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.loginPage {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 20% 60%,
+      rgba(163, 230, 53, 0.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 82% 24%,
+      rgba(11, 20, 36, 0.07),
+      transparent 28%
+    ),
+    var(--background);
+
+  color: var(--text);
+}
+
+/* =============================
+   BACKGROUND GRID
+============================= */
+
+.gridBackground {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(15, 23, 42, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 44px 44px;
+}
+
+/* =============================
+   HEADER
+============================= */
+
+.loginHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 10;
+
+  height: 86px;
+
+  padding: 0 6vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid rgba(15, 23, 42, 0.07);
+
+  background:
+    rgba(244, 246, 241, 0.75);
+
+  backdrop-filter: blur(16px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brandIcon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 14px;
+
+  background: var(--navy);
+  color: var(--lime);
+
+  box-shadow:
+    0 10px 26px
+    rgba(11, 20, 36, 0.16);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandText strong {
+  color: var(--navy);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+.brandText p {
+  margin: 3px 0 0;
+
+  color: var(--muted);
+
+  font-size: 10px;
+}
+
+.networkStatus {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #667085;
+
+  font-size: 10px;
+
+  letter-spacing: 0.08em;
+}
+
+.networkDot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #6aaa28;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(106, 170, 40, 0.12);
+}
+
+.secureBadge {
+  margin-left: 15px;
+
+  padding: 8px 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  color: #344054;
+
+  font-weight: 700;
+}
+
+/* =============================
+   MAIN LAYOUT
+============================= */
+
+.loginContainer {
+  min-height: 100vh;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(430px, 0.85fr);
+
+  align-items: center;
+
+  gap: 6vw;
+
+  padding:
+    120px
+    6vw
+    45px;
+}
+
+/* =============================
+   LEFT HERO
+============================= */
+
+.hero {
+  position: relative;
+  min-width: 0;
+}
+
+.heroBadge {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #6d951f;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+.hero h1 {
+  max-width: 780px;
+
+  margin:
+    18px 0 0;
+
+  color: var(--navy);
+
+  font-size:
+    clamp(50px, 5.1vw, 78px);
+
+  line-height: 0.98;
+
+  letter-spacing: -0.055em;
+
+  font-weight: 780;
+}
+
+.hero h1 span {
+  color: #1a2738;
+}
+
+.hero h1 i {
+  color: var(--lime-dark);
+  font-style: normal;
+}
+
+.heroText {
+  max-width: 620px;
+
+  margin:
+    27px 0 20px;
+
+  color: #5f6978;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+.featureList {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 12px 20px;
+
+  color: #485467;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.featureList div {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.featureList svg {
+  color: #7ca728;
+}
+
+/* =============================
+   ABSTRACT VISUAL
+============================= */
+
+.visual {
+  position: relative;
+
+  width: min(100%, 650px);
+  height: 330px;
+
+  margin-top: 25px;
+}
+
+.visualGlow {
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  left: 50%;
+  top: 46%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(163, 230, 53, 0.19),
+      rgba(163, 230, 53, 0.04) 50%,
+      transparent 72%
+    );
+}
+
+.circle {
+  position: absolute;
+
+  left: 50%;
+  top: 46%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(50, 70, 70, 0.18);
+}
+
+.circle1 {
+  width: 180px;
+  height: 180px;
+}
+
+.circle2 {
+  width: 285px;
+  height: 285px;
+}
+
+.circle3 {
+  width: 430px;
+  height: 310px;
+}
+
+/* =============================
+   CENTER NODE
+============================= */
+
+.centerNode {
+  position: absolute;
+
+  left: 50%;
+  top: 46%;
+
+  transform:
+    translate(-50%, -50%);
+
+  width: 130px;
+  height: 130px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(120, 160, 40, 0.25);
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 15px 45px
+    rgba(15, 23, 42, 0.08);
+
+  animation:
+    floating 5s
+    ease-in-out infinite;
+}
+
+.fingerprint {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: #739d21;
+
+  background: var(--lime-light);
+}
+
+.centerNode small {
+  margin-top: 6px;
+
+  color: #88909b;
+
+  font-size: 7px;
+
+  letter-spacing: 0.16em;
+}
+
+.centerNode strong {
+  color: #243044;
+
+  font-size: 12px;
+
+  letter-spacing: 0.07em;
+}
+
+.centerNode p {
+  margin:
+    3px 0 0;
+
+  color: #969da7;
+
+  font-size: 7px;
+}
+
+/* =============================
+   SIGNAL NODES
+============================= */
+
+.signal {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #657080;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+.signal i {
+  width: 8px;
+  height: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #8cb832;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(140, 184, 50, 0.1);
+}
+
+.duty {
+  left: 14%;
+  top: 16%;
+}
+
+.deployment {
+  right: 8%;
+  top: 17%;
+}
+
+.leave {
+  left: 4%;
+  top: 49%;
+}
+
+.wellness {
+  right: 3%;
+  top: 50%;
+}
+
+.recovery {
+  left: 15%;
+  bottom: 15%;
+}
+
+.checkin {
+  right: 6%;
+  bottom: 15%;
+}
+
+/* =============================
+   SUPPORT CARD
+============================= */
+
+.supportCard {
+  position: absolute;
+
+  bottom: 0;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  min-width: 235px;
+
+  padding:
+    11px 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.08);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 10px 30px
+    rgba(15, 23, 42, 0.07);
+}
+
+.supportCard div {
+  display: flex;
+  flex-direction: column;
+}
+
+.supportCard small {
+  color: #9299a3;
+
+  font-size: 6px;
+
+  letter-spacing: 0.12em;
+}
+
+.supportCard strong {
+  margin-top: 2px;
+
+  color: #253044;
+
+  font-size: 11px;
+}
+
+.supportCard svg {
+  color: #7da826;
+}
+
+/* =============================
+   HERO FOOTER
+============================= */
+
+.heroFooter {
+  margin-top: 14px;
+}
+
+.heroFooter strong {
+  color: #273346;
+
+  font-size: 12px;
+}
+
+.heroFooter p {
+  margin:
+    5px 0 0;
+
+  display: flex;
+  gap: 7px;
+
+  color: #888f99;
+
+  font-size: 9px;
+}
+
+.heroFooter span {
+  color: #8bae42;
+}
+
+/* =============================
+   LOGIN SIDE
+============================= */
+
+.loginSide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================
+   LOGIN CARD
+============================= */
+
+.loginCard {
+  position: relative;
+
+  width: 100%;
+  max-width: 520px;
+
+  overflow: hidden;
+
+  padding:
+    40px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.82);
+
+  border-radius: 30px;
+
+  background:
+    rgba(255, 255, 255, 0.84);
+
+  backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 35px 80px
+    rgba(15, 23, 42, 0.13),
+    inset
+    0 1px 0
+    rgba(255, 255, 255, 0.85);
+}
+
+.portalTitle {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #709721;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+.loginCard h2 {
+  margin:
+    13px 0 4px;
+
+  color: var(--navy);
+
+  font-size: 34px;
+
+  letter-spacing: -0.04em;
+}
+
+.subtitle {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+/* =============================
+   DEMO SHORTCUTS
+============================= */
+
+.shortcutSection {
+  margin-top: 25px;
+}
+
+.shortcutSection > label,
+.formGroup > label {
+  color: #697384;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+.shortcutGrid {
+  margin-top: 9px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 7px;
+}
+
+.shortcut {
+  position: relative;
+
+  min-height: 59px;
+
+  padding:
+    9px 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  text-align: left;
+
+  border:
+    1px solid #e6e8eb;
+
+  border-radius: 12px;
+
+  background: #fafbfa;
+
+  color: #566072;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.shortcut:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(120, 160, 35, 0.4);
+
+  box-shadow:
+    0 8px 20px
+    rgba(15, 23, 42, 0.06);
+}
+
+.shortcut strong {
+  font-size: 9px;
+}
+
+.shortcut span {
+  margin-top: 3px;
+
+  font-size: 7px;
+
+  opacity: 0.7;
+}
+
+.shortcut.active {
+  border-color:
+    var(--navy);
+
+  background:
+    var(--navy);
+
+  color: white;
+
+  box-shadow:
+    0 10px 24px
+    rgba(11, 20, 36, 0.15);
+}
+
+.selectedCheck {
+  position: absolute;
+
+  top: 8px;
+  right: 8px;
+
+  color: var(--lime);
+}
+
+/* =============================
+   LOGIN FORM
+============================= */
+
+.loginForm {
+  margin-top: 25px;
+}
+
+.formGroup {
+  margin-top: 16px;
+}
+
+.inputBox {
+  height: 55px;
+
+  margin-top: 8px;
+
+  padding:
+    0 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border:
+    1px solid #e1e5e8;
+
+  border-radius: 14px;
+
+  background:
+    rgba(250, 251, 250, 0.9);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.inputBox:focus-within {
+  border-color:
+    rgba(125, 168, 38, 0.7);
+
+  background: white;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(163, 230, 53, 0.1);
+}
+
+.inputBox > svg {
+  flex-shrink: 0;
+
+  color: #8a929d;
+}
+
+.inputBox input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #172033;
+
+  font-size: 12px;
+}
+
+.inputBox input::placeholder {
+  color: #9da4ae;
+}
+
+.eyeButton {
+  padding: 4px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #8a929d;
+
+  cursor: pointer;
+}
+
+.eyeButton:hover {
+  color: #5f6875;
+}
+
+/* =============================
+   ERROR
+============================= */
+
+.errorBox {
+  margin-top: 12px;
+
+  padding:
+    10px 12px;
+
+  border:
+    1px solid #ffd8d5;
+
+  border-radius: 10px;
+
+  background: #fff2f1;
+
+  color: #b42318;
+
+  font-size: 10px;
+}
+
+/* =============================
+   LOGIN BUTTON
+============================= */
+
+.loginButton {
+  width: 100%;
+  height: 58px;
+
+  margin-top: 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b1424,
+      #18263c
+    );
+
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 15px 28px
+    rgba(11, 20, 36, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.loginButton:hover:not(:disabled) {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 18px 34px
+    rgba(11, 20, 36, 0.23);
+}
+
+.loginButton svg {
+  color: var(--lime);
+
+  transition:
+    transform 0.2s ease;
+}
+
+.loginButton:hover:not(:disabled) svg {
+  transform:
+    translateX(4px);
+}
+
+.loginButton:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.75;
+}
+
+/* =============================
+   SECURITY INFORMATION
+============================= */
+
+.securityBox {
+  margin-top: 22px;
+
+  padding: 13px;
+
+  display: flex;
+
+  gap: 10px;
+
+  border:
+    1px solid
+    rgba(120, 160, 35, 0.14);
+
+  border-radius: 12px;
+
+  background:
+    rgba(248, 250, 244, 0.85);
+}
+
+.securityBox > svg {
+  flex-shrink: 0;
+
+  color: #7b9f30;
+}
+
+.securityBox strong {
+  color: #414c5c;
+
+  font-size: 9px;
+}
+
+.securityBox p {
+  margin:
+    3px 0 0;
+
+  color: #8c949f;
+
+  font-size: 7px;
+
+  line-height: 1.5;
+}
+
+/* =============================
+   CARD FOOTER
+============================= */
+
+.cardFooter {
+  margin-top: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  color: #9299a2;
+
+  font-size: 7px;
+}
+
+.cardFooter span {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+/* =============================
+   VERIFICATION OVERLAY
+============================= */
+
+.verifyOverlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 100;
+
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(248, 250, 247, 0.97);
+
+  backdrop-filter: blur(16px);
+
+  text-align: center;
+}
+
+.verifyIcon {
+  width: 65px;
+  height: 65px;
+
+  margin-bottom: 16px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 19px;
+
+  background: var(--navy);
+
+  color: var(--lime);
+
+  box-shadow:
+    0 16px 35px
+    rgba(11, 20, 36, 0.16);
+}
+
+.verifyOverlay h3 {
+  margin: 0;
+
+  color: var(--navy);
+
+  font-size: 21px;
+
+  letter-spacing: -0.03em;
+}
+
+.verifyOverlay > p {
+  margin:
+    6px 0 21px;
+
+  color: var(--muted);
+
+  font-size: 10px;
+}
+
+.verifyItem {
+  width: 260px;
+
+  margin-top: 8px;
+
+  padding:
+    9px 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #9299a3;
+
+  font-size: 9px;
+
+  text-align: left;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.verifyItem.done {
+  border-color:
+    rgba(120, 160, 35, 0.2);
+
+  background: #f6faee;
+
+  color: #52731d;
+
+  font-weight: 700;
+}
+
+.verifyItem.done svg {
+  color: #78a91c;
+}
+
+.emptyCircle {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+
+  border:
+    1px solid #d5d8dc;
+
+  border-radius: 50%;
+}
+
+/* =============================
+   ANIMATIONS
+============================= */
+
+.spinner {
+  animation:
+    spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translateY(-6px);
+  }
+}
+
+/* =============================
+   TABLET
+============================= */
+
+@media (max-width: 1050px) {
+  .loginContainer {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 3vw;
+
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .signal {
+    font-size: 8px;
+  }
+}
+
+/* =============================
+   SMALL TABLET
+============================= */
+
+@media (max-width: 900px) {
+  .networkStatus {
+    display: none;
+  }
+
+  .loginContainer {
+    display: block;
+
+    padding:
+      120px
+      20px
+      40px;
+  }
+
+  .hero {
+    max-width: 650px;
+
+    margin: auto;
+  }
+
+  .loginSide {
+    margin-top: 40px;
+  }
+
+  .loginCard {
+    max-width: 600px;
+  }
+}
+
+/* =============================
+   MOBILE
+============================= */
+
+@media (max-width: 600px) {
+  .loginHeader {
+    height: 78px;
+
+    padding:
+      0 20px;
+  }
+
+  .brandText p {
+    max-width: 190px;
+  }
+
+  .loginContainer {
+    padding-top: 110px;
+  }
+
+  .hero h1 {
+    font-size:
+      clamp(40px, 12vw, 50px);
+  }
+
+  .heroText {
+    font-size: 14px;
+  }
+
+  .featureList {
+    flex-direction: column;
+
+    gap: 9px;
+  }
+
+  .visual {
+    height: 230px;
+  }
+
+  .signal,
+  .circle3 {
+    display: none;
+  }
+
+  .centerNode {
+    top: 43%;
+  }
+
+  .supportCard {
+    bottom: 0;
+  }
+
+  .loginCard {
+    padding:
+      27px 20px;
+
+    border-radius: 23px;
+  }
+
+  .shortcutGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .shortcut {
+    min-height: 52px;
+  }
+
+  .loginCard h2 {
+    font-size: 30px;
+  }
+}
