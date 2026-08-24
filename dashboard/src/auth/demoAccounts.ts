@@ -19,8 +19,8 @@ export const DEMO_ACCOUNTS: DemoAccount[] = [
     password: "demo-welfare-1st-2026",
   },
   {
-    label: "Personnel",
-    subtitle: "Demo Profile · p_00013",
+    label: "Personal",
+    subtitle: "Private Profile · p_00013",
     serviceId: "CRPF-PER-00013",
     password: "demo-p-00013-2026",
   },

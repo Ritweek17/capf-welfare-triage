@@ -771,6 +771,13 @@ input {
   gap: 7px;
 }
 
+.portalAccessHint {
+  margin: 9px 2px 0;
+  color: #7a8595;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
 .shortcut {
   position: relative;
 
