@@ -8,19 +8,20 @@ export interface DemoAccount {
 export const DEMO_ACCOUNTS: DemoAccount[] = [
   {
     label: "Commander",
-    subtitle: "Command Access",
-    serviceId: "CRPF-DEMO-COMMANDER",
-    password: "demo-commander-2026",
+    subtitle: "1st Company Command",
+    serviceId: "CRPF-CMD-1ST",
+    password: "demo-commander-1st-2026",
   },
   {
     label: "Welfare Officer",
-    subtitle: "Welfare Access",
-    serviceId: "CRPF-DEMO-WELFARE",
-    password: "demo-welfare-2026",
+    subtitle: "1st Company Welfare",
+    serviceId: "CRPF-WEL-1ST",
+    password: "demo-welfare-1st-2026",
   },
   {
     label: "Personnel",
     subtitle: "Demo Profile · p_00013",
-    serviceId: "p_00013",
+    serviceId: "CRPF-PER-00013",
+    password: "demo-p-00013-2026",
   },
 ];

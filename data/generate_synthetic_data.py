@@ -364,6 +364,44 @@ def generate_dataset(
             generate_biometrics(person_id, history_dates, rng, consented)
         )
 
+    demo_accounts = []
+    
+    # Personnel credentials
+    for person in persons:
+        pid = person["person_id"]
+        pid_num = pid.split("_")[1]
+        demo_accounts.append({
+            "person_id": pid,
+            "service_id": f"CRPF-PER-{pid_num}",
+            "password": f"demo-p-{pid_num}-2026",
+            "role": "personnel"
+        })
+        
+    # Commanders and Welfare Officers
+    staff_config = [
+        ("cmd", "CMD", "commander", "demo-commander"),
+        ("wel", "WEL", "welfare_officer", "demo-welfare")
+    ]
+    companies = [("1st", "1ST", "1st Company"), ("2nd", "2ND", "2nd Company"), ("3rd", "3RD", "3rd Company")]
+    
+    for prefix, srv_prefix, role, pwd_prefix in staff_config:
+        for comp, srv_comp, unit in companies:
+            pid = f"{prefix}_{comp}"
+            persons.append({
+                "person_id": pid,
+                "unit": unit,
+                "role": role,
+                "enrolled_at": iso_date(effective_as_of),
+                "biometric_consent": False,
+                "is_deliberate_at_risk_profile": False,
+            })
+            demo_accounts.append({
+                "person_id": pid,
+                "service_id": f"CRPF-{srv_prefix}-{srv_comp}",
+                "password": f"{pwd_prefix}-{comp}-2026",
+                "role": role
+            })
+
     dataset: dict[str, list[dict[str, Any]]] = {
         "persons": persons,
         "leave_records": leave_records,
@@ -372,20 +410,7 @@ def generate_dataset(
         "biometric_records": biometric_records,
         "risk_results": [],
         "access_logs": [],
-        "demo_accounts": [
-            {
-                "person_id": "demo_welfare_officer",
-                "service_id": "CRPF-DEMO-WELFARE",
-                "password": "demo-welfare-2026",
-                "role": "welfare_officer",
-            },
-            {
-                "person_id": "demo_commander",
-                "service_id": "CRPF-DEMO-COMMANDER",
-                "password": "demo-commander-2026",
-                "role": "commander",
-            },
-        ],
+        "demo_accounts": demo_accounts,
     }
     validate_dataset(dataset, people_count)
     return dataset
@@ -417,17 +442,22 @@ def validate_dataset(
     validate_fields(dataset["demo_accounts"], DEMO_ACCOUNT_FIELDS, "demo_accounts")
 
     persons = dataset["persons"]
-    if len(persons) != people_count:
-        raise ValueError("generated person count does not match requested count")
-    if sum(person["biometric_consent"] for person in persons) != people_count // 5:
+    if len(persons) != people_count + 6:
+        raise ValueError("generated person count does not match requested count plus 6 staff")
+    
+    monitored_persons = [p for p in persons if p["role"] == "personnel"]
+    if len(monitored_persons) != people_count:
+        raise ValueError("monitored personnel count does not match requested count")
+
+    if sum(person["biometric_consent"] for person in monitored_persons) != people_count // 5:
         raise ValueError("biometric consent must be exactly 20% of monitored personnel")
-    if sum(person["is_deliberate_at_risk_profile"] for person in persons) != 4:
+    if sum(person["is_deliberate_at_risk_profile"] for person in monitored_persons) != 4:
         raise ValueError("expected exactly four deliberate at-risk profiles")
 
     person_ids = {person["person_id"] for person in persons}
     for person in persons:
-        if person["role"] != "personnel":
-            raise ValueError("monitored personnel must use the personnel role")
+        if person["role"] not in {"personnel", "commander", "welfare_officer"}:
+            raise ValueError("invalid role")
         if not isinstance(person["biometric_consent"], bool):
             raise TypeError("biometric_consent must be bool")
         if not isinstance(person["is_deliberate_at_risk_profile"], bool):
@@ -462,16 +492,17 @@ def validate_dataset(
         if row["status"] not in RUNTIME_STATUSES:
             raise ValueError("invalid RiskResult status")
     for account in dataset["demo_accounts"]:
-        if account["role"] not in {"welfare_officer", "commander"}:
+        if account["role"] not in {"welfare_officer", "commander", "personnel"}:
             raise ValueError("invalid demo account role")
-        if account["person_id"] in person_ids:
-            raise ValueError("demo account overlaps monitored personnel pool")
+        if account["person_id"] not in person_ids:
+            raise ValueError("demo account must map to a valid person")
 
+    monitored_ids = {p["person_id"] for p in persons if p["role"] == "personnel"}
     duty_counts = {
         person_id: sum(
             row["person_id"] == person_id for row in dataset["duty_records"]
         )
-        for person_id in person_ids
+        for person_id in monitored_ids
     }
     short_history_count = sum(count < 3 for count in duty_counts.values())
     if not 10 <= short_history_count <= 15:
@@ -506,7 +537,8 @@ def main() -> None:
         )
         for person in dataset["persons"]
     }
-    print(f"Monitored personnel: {len(dataset['persons'])}")
+    print(f"Monitored personnel: {args.people}")
+    print(f"Staff accounts: {len(dataset['persons']) - args.people}")
     short_history_count = sum(count < 3 for count in duty_counts.values())
     at_risk_count = sum(
         person["is_deliberate_at_risk_profile"] for person in dataset["persons"]

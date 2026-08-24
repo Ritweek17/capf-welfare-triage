@@ -1,24 +1,78 @@
-import React, { useState, type FormEvent } from "react";
 import {
-  Activity, ArrowRight, Check, Eye, EyeOff, Fingerprint,
-  LoaderCircle, Lock, ShieldCheck, Sparkles, User
+  useEffect,
+  useState,
+  type FormEvent,
+} from "react";
+
+import {
+  Activity,
+  ArrowRight,
+  Check,
+  Eye,
+  EyeOff,
+  Fingerprint,
+  LoaderCircle,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  User,
 } from "lucide-react";
 
+import {
+  getRouteForRole,
+  getSession,
+  login,
+} from "../services/auth.service";
+
 import "./LoginPage.css";
-import { DEMO_ACCOUNTS, type DemoAccount } from "../auth/demoAccounts";
 
-interface LoginPageProps {
-  onLogin: (serviceId: string, password: string) => Promise<void>;
-}
+import {
+  DEMO_ACCOUNTS,
+  type DemoAccountShortcut,
+} from "../data/demoUsers";
 
-export default function LoginPage({ onLogin }: LoginPageProps) {
-  const [serviceId, setServiceId] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [verificationStep, setVerificationStep] = useState(0);
+type DemoRole =
+  | "COMMANDER"
+  | "WELFARE_OFFICER"
+  | "PERSONNEL";
+
+export default function LoginPage() {
+  const [loginId, setLoginId] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const [selectedRole, setSelectedRole] =
+    useState<DemoRole | null>(null);
+
+  const [error, setError] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [verificationStep, setVerificationStep] =
+    useState(0);
+
+  /*
+   * If a user is already authenticated,
+   * send them directly to their authorized dashboard.
+   */
+  useEffect(() => {
+    const session = getSession();
+
+    if (session) {
+      window.location.replace(
+        getRouteForRole(
+          session.user.role
+        )
+      );
+    }
+  }, []);
 
   function wait(ms: number) {
     return new Promise((resolve) =>
@@ -33,14 +87,25 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
    * The actual role is always returned
    * by the authentication service.
    */
-  function handleDemoShortcut(shortcut: DemoAccount) {
-    setServiceId(shortcut.serviceId);
+  function handleDemoShortcut(
+    shortcut: DemoAccountShortcut
+  ) {
+    setLoginId(
+      shortcut.loginId
+    );
+
     if (shortcut.password) {
-      setPassword(shortcut.password);
+      setPassword(
+        shortcut.password
+      );
     } else {
       setPassword("");
     }
-    setSelectedRole(shortcut.label);
+
+    setSelectedRole(
+      shortcut.role
+    );
+
     setError("");
   }
 
@@ -51,23 +116,29 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
     setError("");
 
-    if (!serviceId.trim()) {
-      setError("Service ID is required.");
+    if (!loginId.trim()) {
+      setError(
+        "Login ID is required."
+      );
+
       return;
     }
 
     if (!password) {
-      setError("Password is required.");
+      setError(
+        "Password is required."
+      );
+
       return;
     }
 
-    const upperServiceId = serviceId.toUpperCase();
-    if (selectedRole === "Welfare Officer" && !upperServiceId.includes("-WEL-")) {
+    const upperServiceId = loginId.toUpperCase();
+    if (selectedRole === "WELFARE_OFFICER" && !upperServiceId.includes("-WEL-")) {
       setError("Only respective officer should be able to login.");
       return;
     }
     
-    if (selectedRole === "Commander" && !upperServiceId.includes("-CMD-")) {
+    if (selectedRole === "COMMANDER" && !upperServiceId.includes("-CMD-")) {
       setError("Only respective officer should be able to login.");
       return;
     }
@@ -76,16 +147,43 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       setLoading(true);
       setVerificationStep(0);
 
-      const loginPromise = onLogin(serviceId, password);
+      /*
+       * Authentication happens here.
+       *
+       * Right now this calls the mock
+       * authentication service.
+       *
+       * Later the same service can call
+       * the FastAPI /auth/login endpoint.
+       */
+      const session = await login(
+        loginId,
+        password
+      );
+
+      /*
+       * Short verification animation
+       * for the hackathon demo.
+       */
 
       setVerificationStep(1);
       await wait(220);
+
       setVerificationStep(2);
       await wait(220);
+
       setVerificationStep(3);
       await wait(300);
 
-      await loginPromise;
+      /*
+       * Redirect based on the role
+       * returned by authentication.
+       */
+      window.location.replace(
+        getRouteForRole(
+          session.user.role
+        )
+      );
     } catch (error) {
       setLoading(false);
       setVerificationStep(0);
@@ -366,12 +464,15 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   (shortcut) => (
                     <button
                       type="button"
-                      key={shortcut.label}
+                      key={shortcut.role}
                       onClick={() =>
-                        handleDemoShortcut(shortcut)
+                        handleDemoShortcut(
+                          shortcut
+                        )
                       }
                       className={
-                        selectedRole === shortcut.label
+                        selectedRole ===
+                        shortcut.role
                           ? "shortcut active"
                           : "shortcut"
                       }
@@ -382,11 +483,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                       </strong>
 
                       <span>
-                        {shortcut.subtitle}
+                        {shortcut.role === "COMMANDER" && "Command Access"}
+                        {shortcut.role === "WELFARE_OFFICER" && "Welfare Access"}
+                        {shortcut.role === "PERSONNEL" && shortcut.loginId}
                       </span>
 
                       {selectedRole ===
-                        shortcut.label && (
+                        shortcut.role && (
                         <Check
                           size={14}
                           className="selectedCheck"
@@ -413,29 +516,47 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               {/* LOGIN ID */}
 
               <div className="formGroup">
-                <label>SERVICE ID</label>
+
+                <label>
+                  AUTHORIZED LOGIN ID
+                </label>
+
                 <div className="inputBox">
+
                   <User size={18} />
+
                   <input
                     type="text"
-                    value={serviceId}
-                    placeholder="Enter Service ID"
+                    value={loginId}
+                    placeholder="Enter Login ID"
                     autoComplete="username"
                     onChange={(event) => {
-                      setServiceId(event.target.value);
+
+                      setLoginId(
+                        event.target.value
+                      );
+
                       setError("");
+
                     }}
                   />
+
                 </div>
+
               </div>
 
               {/* PASSWORD */}
+
               <div className="formGroup">
+
                 <label>
                   PASSWORD
                 </label>
+
                 <div className="inputBox">
+
                   <Lock size={18} />
+
                   <input
                     type={
                       showPassword
@@ -446,10 +567,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                     placeholder="Enter password"
                     autoComplete="current-password"
                     onChange={(event) => {
+
                       setPassword(
                         event.target.value
                       );
+
                       setError("");
+
                     }}
                   />
 

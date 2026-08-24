@@ -94,7 +94,7 @@ TABLE_DEFINITIONS = {
             person_id TEXT PRIMARY KEY,
             service_id TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            role TEXT NOT NULL CHECK (role IN ('welfare_officer', 'commander'))
+            role TEXT NOT NULL CHECK (role IN ('personnel', 'welfare_officer', 'commander'))
         )
     """,
 }
