@@ -6,9 +6,10 @@ import {
 
 import "./LoginPage.css";
 import { DEMO_ACCOUNTS, type DemoAccount } from "../auth/demoAccounts";
+import type { UserRole } from "../types/auth";
 
 interface LoginPageProps {
-  onLogin: (serviceId: string, password: string) => Promise<void>;
+  onLogin: (serviceId: string, password: string, requestedPortal?: UserRole) => Promise<void>;
 }
 
 export default function LoginPage({ onLogin }: LoginPageProps) {
@@ -76,7 +77,16 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       setLoading(true);
       setVerificationStep(0);
 
-      const loginPromise = onLogin(serviceId, password);
+      const requestedPortal: UserRole | undefined =
+        selectedRole === "Commander"
+          ? "COMMANDER"
+          : selectedRole === "Welfare Officer"
+            ? "WELFARE_OFFICER"
+            : selectedRole === "Personnel"
+              ? "PERSONNEL"
+              : undefined;
+
+      const loginPromise = onLogin(serviceId, password, requestedPortal);
 
       setVerificationStep(1);
       await wait(220);
@@ -200,7 +210,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
             <div>
               <Check size={15} />
-              Personal Baselines
+              Personnel Baselines
             </div>
 
             <div>
@@ -236,7 +246,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               </div>
 
               <small>
-                PERSONAL
+                PERSONNEL
               </small>
 
               <strong>
@@ -398,6 +408,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                 )}
 
               </div>
+
+              <p className="portalAccessHint">
+                Commander and Welfare Officer accounts may choose Personnel for their own private welfare space. Official portals remain role restricted.
+              </p>
 
             </div>
 

@@ -1,10 +1,12 @@
 import React from "react";
 import { LockKeyhole, LogOut, ShieldCheck } from "lucide-react";
 import { useAuth } from "./auth/useAuth";
+import { getDashboardUrl } from "./config/dashboardRoutes";
 import LoginPage from "./views/LoginPage";
 import CommanderView from "./views/CommanderView";
 import PersonnelView from "./views/PersonnelView";
 import WelfareOfficerView from "./views/WelfareOfficerView";
+import type { UserRole } from "./types/auth";
 
 function AuthenticatedShell({
   children,
@@ -68,6 +70,38 @@ function AuthenticatedShell({
   );
 }
 
+function DashboardRedirect({ role }: { role: UserRole }) {
+  const dashboardUrl = getDashboardUrl(role);
+
+  React.useEffect(() => {
+    if (dashboardUrl) {
+      window.location.replace(dashboardUrl);
+    }
+  }, [dashboardUrl]);
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        placeItems: "center",
+        backgroundColor: "#0f172a",
+        color: "#f8fafc",
+        fontFamily: "Inter, system-ui, sans-serif",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <strong>Access verified</strong>
+        <p style={{ color: "#94a3b8" }}>
+          Opening your authorized dashboard...
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const { session, isAuthenticated, login, logout, isInitializing } = useAuth();
   const hasPushedHistory = React.useRef(false);
@@ -112,9 +146,11 @@ export default function App() {
     case "WELFARE_OFFICER":
       view = <WelfareOfficerView />;
       break;
+      return <DashboardRedirect role="COMMANDER" />;
+    case "WELFARE_OFFICER":
+      return <DashboardRedirect role="WELFARE_OFFICER" />;
     case "PERSONNEL":
-      view = <PersonnelView />;
-      break;
+      return <DashboardRedirect role="PERSONNEL" />;
   }
 
   return (

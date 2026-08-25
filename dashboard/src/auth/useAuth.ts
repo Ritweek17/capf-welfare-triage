@@ -21,6 +21,21 @@ export function useAuth() {
   const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
+    const currentUrl = new URL(window.location.href);
+    const signOutRequested = currentUrl.searchParams.get("logout") === "1";
+
+    if (signOutRequested) {
+      localStorage.removeItem(SESSION_KEY);
+      currentUrl.searchParams.delete("logout");
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`
+      );
+      setIsInitializing(false);
+      return;
+    }
+
     const storedSession = localStorage.getItem(SESSION_KEY);
     if (storedSession) {
       try {
@@ -32,15 +47,36 @@ export function useAuth() {
     setIsInitializing(false);
   }, []);
 
-  const login = async (serviceId: string, password: string) => {
+  const login = async (
+    serviceId: string,
+    password: string,
+    requestedPortal?: UserRole
+  ) => {
     const response = await loginRequest(serviceId, password);
-    const normalizedRole = normalizeRole(response.role);
+    const authenticatedRole = normalizeRole(response.role);
+
+    if (
+      requestedPortal &&
+      requestedPortal !== "PERSONNEL" &&
+      requestedPortal !== authenticatedRole
+    ) {
+      const portalName = requestedPortal === "COMMANDER" ? "Commander" : "Welfare Officer";
+      throw new Error(
+        `This account does not have ${portalName} access. Select Personnel to open your private dashboard.`
+      );
+    }
+
+    // Every authenticated member can use the private Personnel portal.
+    // Privileged Commander/Welfare access still requires the matching role.
+    const effectiveRole = requestedPortal === "PERSONNEL"
+      ? "PERSONNEL"
+      : authenticatedRole;
 
     const newSession: AuthSession = {
       accessToken: response.access_token,
       serviceId,
       personId: response.person_id,
-      role: normalizedRole,
+      role: effectiveRole,
     };
 
     localStorage.setItem(SESSION_KEY, JSON.stringify(newSession));
