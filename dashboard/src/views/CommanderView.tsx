@@ -1,61 +1,157 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import {
+  BarChart3,
+  CalendarDays,
+  CheckCircle2,
+  EyeOff,
+  LayoutDashboard,
+  LogOut,
+  ShieldCheck,
+  TrendingUp,
+} from "lucide-react";
 import { fetchUnitSummary } from "../api/client";
 import TrendChart from "../components/shared/TrendChart";
 import type { UnitSummary } from "../types/auth";
 
-export default function CommanderView() {
-  const [summary, setSummary] = useState<UnitSummary | null>(null);
-  const [error, setError] = useState("");
+type CommanderTab = "overview" | "trends" | "privacy";
 
-  useEffect(() => {
-    fetchUnitSummary().then(setSummary).catch((reason: Error) => setError(reason.message));
-  }, []);
-
-  if (error) {
-    return <ViewMessage message={error} />;
-  }
-  if (!summary) {
-    return <ViewMessage message="Loading your unit welfare overview…" />;
-  }
-
-  const latest = summary.trend_30d[summary.trend_30d.length - 1];
-  return (
-    <main style={pageStyle}>
-      <div style={eyebrowStyle}>COMMANDER · AGGREGATE VIEW</div>
-      <h2 style={headingStyle}>Unit welfare environment</h2>
-      <p style={subheadingStyle}>
-        Organizational trends help identify where support may be useful. Individual personnel data is not shown here.
-      </p>
-      <section style={statGridStyle}>
-        <Stat label="Personnel" value={summary.personnel_count} />
-        <Stat label="Open support alerts" value={summary.open_alert_count} />
-        <Stat label="Today’s check-in participation" value={`${latest?.checkin_participation_rate ?? 0}%`} />
-      </section>
-      <section style={cardStyle}>
-        <div style={eyebrowStyle}>30-DAY TREND</div>
-        <h3 style={{ margin: "0.4rem 0 1rem", color: "#0f172a" }}>{summary.unit}</h3>
-        <TrendChart points={summary.trend_30d} />
-      </section>
-    </main>
-  );
+interface CommanderViewProps {
+  onLogout: () => void;
 }
 
-function Stat({ label, value }: { label: string; value: string | number }) {
+export default function CommanderView({ onLogout }: CommanderViewProps) {
+  const [summary, setSummary] = useState<UnitSummary | null>(null);
+  const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState<CommanderTab>("overview");
+
+  useEffect(() => {
+    fetchUnitSummary()
+      .then(setSummary)
+      .catch((reason: Error) => setError(reason.message));
+  }, []);
+
   return (
-    <div style={cardStyle}>
-      <div style={subheadingStyle}>{label}</div>
-      <div style={{ marginTop: "0.5rem", fontSize: "1.8rem", fontWeight: 800, color: "#0f172a" }}>{value}</div>
+    <div className="commander-app">
+      <aside className="commander-sidebar">
+        <div>
+          <div className="commander-sidebar-brand">
+            <span><ShieldCheck size={20} /></span>
+            <div><strong>CENTURION</strong><small>Command welfare view</small></div>
+          </div>
+          <nav className="commander-nav" aria-label="Commander navigation">
+            <CommanderNavButton active={activeTab === "overview"} icon={<LayoutDashboard size={16} />} onClick={() => setActiveTab("overview")}>Overview</CommanderNavButton>
+            <CommanderNavButton active={activeTab === "trends"} icon={<BarChart3 size={16} />} onClick={() => setActiveTab("trends")}>Wellbeing trends</CommanderNavButton>
+            <CommanderNavButton active={activeTab === "privacy"} icon={<EyeOff size={16} />} onClick={() => setActiveTab("privacy")}>Privacy boundary</CommanderNavButton>
+          </nav>
+        </div>
+        <div className="commander-sidebar-footer">
+          <div className="commander-scope-pill"><CheckCircle2 size={14} /><span>Aggregate scope active</span></div>
+          <button type="button" onClick={onLogout}><LogOut size={15} /> Sign out</button>
+        </div>
+      </aside>
+
+      <main className="commander-main">
+        <header className="commander-topbar">
+          <div>
+            <span className="commander-kicker">COMMANDER · AGGREGATE VIEW</span>
+            <h1>{summary?.unit ?? "Unit welfare overview"}</h1>
+          </div>
+          <div className="commander-topbar-status"><span /> Live synthetic data · 30-day window</div>
+        </header>
+
+        {error ? <div className="commander-error" role="alert">{error}</div> : null}
+        {!summary && !error ? <div className="commander-loading">Loading your authorized aggregate overview…</div> : null}
+        {summary ? <CommanderContent summary={summary} activeTab={activeTab} /> : null}
+      </main>
     </div>
   );
 }
 
-function ViewMessage({ message }: { message: string }) {
-  return <main style={pageStyle}><p style={subheadingStyle}>{message}</p></main>;
+function CommanderNavButton({ active, icon, children, onClick }: { active: boolean; icon: ReactNode; children: ReactNode; onClick: () => void }) {
+  return (
+    <button type="button" className={`commander-nav-button${active ? " is-active" : ""}`} onClick={onClick} aria-current={active ? "page" : undefined}>
+      {icon}<span>{children}</span>
+    </button>
+  );
 }
 
-const pageStyle = { maxWidth: 1100, margin: "0 auto", padding: "2rem" };
-const cardStyle = { background: "#ffffff", border: "1px solid #dbe4d2", borderRadius: "16px", padding: "1.25rem", boxShadow: "0 8px 24px rgba(15, 23, 42, 0.05)" };
-const statGridStyle = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", margin: "1.5rem 0" };
-const eyebrowStyle = { color: "#6b8f1a", fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.08em" };
-const headingStyle = { margin: "0.4rem 0", color: "#0f172a", fontSize: "2rem" };
-const subheadingStyle = { color: "#64748b", lineHeight: 1.6 };
+function CommanderContent({ summary, activeTab }: { summary: UnitSummary; activeTab: CommanderTab }) {
+  const latest = summary.trend_30d[summary.trend_30d.length - 1];
+  const previous = summary.trend_30d[summary.trend_30d.length - 2];
+  const aggregateSignal = latest?.avg_risk_indicator ?? 0;
+  const signalDelta = latest && previous ? aggregateSignal - previous.avg_risk_indicator : 0;
+
+  if (activeTab === "privacy") {
+    return <CommanderPrivacyPanel />;
+  }
+
+  return (
+    <div className="commander-content">
+      <section className="commander-intro">
+        <div>
+          <span className="commander-kicker">UNIT HEALTH PICTURE</span>
+          <h2>Support where the unit pattern shifts.</h2>
+          <p>Aggregate indicators help identify where welfare support may be useful. Individual names, scores, notes, check-ins, and biometric values are not shown in this view.</p>
+        </div>
+        <div className="commander-privacy-badge"><ShieldCheck size={16} /><span>0 individual risk records exposed</span></div>
+      </section>
+
+      <section className="commander-metric-grid" aria-label="Aggregate unit metrics">
+        <MetricCard label="Personnel in unit" value={summary.personnel_count} detail="Synthetic roster count" />
+        <MetricCard label="Open support alerts" value={summary.open_alert_count} detail="Welfare Officer queue" accent="attention" />
+        <MetricCard label="Check-in participation" value={`${latest?.checkin_participation_rate ?? 0}%`} detail="Latest recorded day" accent="blue" />
+        <MetricCard label="Aggregate signal" value={aggregateSignal.toFixed(2)} detail={signalDelta >= 0 ? `+${signalDelta.toFixed(2)} vs prior point` : `${signalDelta.toFixed(2)} vs prior point`} accent="sage" />
+      </section>
+
+      {activeTab === "overview" ? (
+        <section className="commander-hero-panel">
+          <div className="commander-panel-heading">
+            <div><span className="commander-kicker">SECTOR HEALTH</span><h2>Unit wellbeing trajectory</h2><p>Aggregate signal and voluntary participation over the last 30 days.</p></div>
+            <span className="commander-period"><CalendarDays size={14} /> 30 days</span>
+          </div>
+          <TrendChart points={summary.trend_30d} />
+          <div className="commander-chart-footer"><span><TrendingUp size={14} /> Aggregate vector only</span><span>Human welfare review remains the decision point</span></div>
+        </section>
+      ) : (
+        <section className="commander-hero-panel">
+          <div className="commander-panel-heading">
+            <div><span className="commander-kicker">WELLBEING TRENDS</span><h2>30-day aggregate movement</h2><p>Use this signal as context for unit-level support planning, not as an individual assessment.</p></div>
+            <span className="commander-period"><BarChart3 size={14} /> Aggregate vector</span>
+          </div>
+          <TrendChart points={summary.trend_30d} />
+          <div className="commander-trend-note"><ShieldCheck size={15} /><span>Commander access excludes individual identifiers and raw welfare records by design.</span></div>
+        </section>
+      )}
+    </div>
+  );
+}
+
+function MetricCard({ label, value, detail, accent = "default" }: { label: string; value: string | number; detail: string; accent?: "default" | "attention" | "blue" | "sage" }) {
+  return (
+    <article className={`commander-metric-card commander-metric-${accent}`}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <small>{detail}</small>
+    </article>
+  );
+}
+
+function CommanderPrivacyPanel() {
+  return (
+    <div className="commander-content">
+      <section className="commander-privacy-panel">
+        <div className="commander-privacy-heading"><span><ShieldCheck size={20} /></span><div><span className="commander-kicker">PRIVACY LANE · CLEAR</span><h2>Aggregate intelligence only</h2></div></div>
+        <p>Commander access is intentionally limited to unit-level trends and counts. This prevents welfare signals from becoming a personnel surveillance or disciplinary tool.</p>
+        <div className="commander-privacy-list">
+          <PrivacyItem title="No individual identifiers" text="Names, person IDs, notes, and individual check-ins are excluded from the Commander response." />
+          <PrivacyItem title="Welfare Officer boundary" text="Individual explainable alerts and intervention records remain available only to authorized Welfare Officers." />
+          <PrivacyItem title="Human-led support" text="Aggregate movement is context for support planning; it is never a diagnosis or fitness-for-duty decision." />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function PrivacyItem({ title, text }: { title: string; text: string }) {
+  return <div className="commander-privacy-item"><CheckCircle2 size={16} /><div><strong>{title}</strong><p>{text}</p></div></div>;
+}

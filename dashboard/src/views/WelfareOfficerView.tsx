@@ -41,7 +41,7 @@ export default function WelfareOfficerView() {
   }
 
   return (
-    <main style={pageStyle}>
+    <main className="role-page welfare-page" style={pageStyle}>
       <div style={eyebrowStyle}>WELFARE OFFICER · CONFIDENTIAL QUEUE</div>
       <h2 style={headingStyle}>Who may need a check-in, and why?</h2>
       <p style={subheadingStyle}>
@@ -49,13 +49,13 @@ export default function WelfareOfficerView() {
       </p>
       {message && <div style={noticeStyle}>{message}</div>}
       {loading ? <p style={subheadingStyle}>Refreshing authorized support signals…</p> : null}
-      {!loading && alerts.length === 0 ? <div style={emptyStyle}>No open welfare-support signals for this unit.</div> : null}
+      {!loading && alerts.length === 0 ? <div className="role-empty" style={emptyStyle}>No open welfare-support signals for this unit.</div> : null}
       <div style={{ display: "grid", gap: "1rem", marginTop: "1.5rem" }}>
         {alerts.map((alert) => <AlertCard key={alert.alert_id} alert={alert} onLog={setSelectedAlert} />)}
       </div>
       {selectedAlert && (
-        <div style={modalBackdropStyle}>
-          <section style={modalStyle}>
+        <div className="role-modal" style={modalBackdropStyle}>
+          <section className="role-modal-card" style={modalStyle}>
             <div style={eyebrowStyle}>LOG HUMAN OUTCOME</div>
             <h3 style={{ color: "#0f172a" }}>Support follow-up for {selectedAlert.person_id}</h3>
             <p style={subheadingStyle}>Record only what is appropriate for a confidential welfare follow-up.</p>

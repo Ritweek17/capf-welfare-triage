@@ -34,11 +34,11 @@ export default function PersonnelView() {
   }
 
   return (
-    <main style={pageStyle}>
+    <main className="role-page personnel-page" style={pageStyle}>
       <div style={eyebrowStyle}>PERSONNEL · VOLUNTARY CHECK-IN</div>
       <h2 style={headingStyle}>How are you doing today?</h2>
       <p style={subheadingStyle}>This is a private welfare check-in. Your response is used to support a human conversation, not to make a diagnosis.</p>
-      <form onSubmit={handleSubmit} style={formStyle}>
+      <form className="role-panel" onSubmit={handleSubmit} style={formStyle}>
         <label style={labelStyle}>Overall mood: <strong>{mood}/5</strong>
           <input type="range" min="1" max="5" value={mood} onChange={(event) => setMood(Number(event.target.value))} style={{ width: "100%" }} />
         </label>

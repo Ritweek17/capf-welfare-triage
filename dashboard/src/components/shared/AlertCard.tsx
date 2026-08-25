@@ -8,6 +8,7 @@ interface AlertCardProps {
 export default function AlertCard({ alert, onLog }: AlertCardProps) {
   return (
     <article
+      className="role-panel alert-card"
       style={{
         border: "1px solid #dbe4d2",
         borderRadius: "16px",
@@ -38,6 +39,7 @@ export default function AlertCard({ alert, onLog }: AlertCardProps) {
         {alert.factors.map((factor) => (
           <div
             key={`${factor.factor}-${factor.deviation}`}
+            className="alert-factor"
             style={{ padding: "0.65rem 0.75rem", borderRadius: "10px", background: "#f5f9ee" }}
           >
             <strong style={{ color: "#334155" }}>{factor.factor.replace(/_/g, " ")}</strong>
