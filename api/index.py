@@ -6,6 +6,7 @@ from fastapi import FastAPI
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 BACKEND_ROOT = REPOSITORY_ROOT / "backend"
+BACKEND_ROOT = REPOSITORY_ROOT / "capf-welfare-triage" / "backend"
 
 if str(BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(BACKEND_ROOT))

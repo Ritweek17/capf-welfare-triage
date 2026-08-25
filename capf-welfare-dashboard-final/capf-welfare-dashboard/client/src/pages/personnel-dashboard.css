@@ -1,0 +1,141 @@
+.personnel-shell { min-height: 100vh; color: #0b1830; background: #f8faf5; font-family: Inter, system-ui, sans-serif; }
+.personnel-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 30; width: 250px; display: flex; flex-direction: column; padding: 22px 17px 18px; border-right: 1px solid #dfe7d8; background: #f1f5e9; }
+.personnel-brand { display: flex; align-items: center; gap: 11px; padding: 0 6px 22px; }
+.personnel-brand > span { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: #fff; box-shadow: 0 5px 14px rgba(11,24,48,.08); }
+.personnel-brand svg { width: 31px; height: 31px; }
+.personnel-brand div { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+.personnel-brand strong { font-size: 15px; letter-spacing: -.03em; }
+.personnel-brand small { color: #75806f; font-size: 9px; }
+.personnel-brand > button { display: none; border: 0; background: transparent; }
+.personnel-sidebar nav { display: flex; flex-direction: column; gap: 5px; }
+.personnel-sidebar nav button { width: 100%; height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 13px; border: 0; border-radius: 11px; color: #5c6856; background: transparent; font-weight: 650; text-align: left; }
+.personnel-sidebar nav button:hover { color: #0b1830; background: #e7eddc; }
+.personnel-sidebar nav button.active { color: #0b1830; background: #b7db50; }
+.sidebar-help { margin-top: auto; padding: 16px; border: 1px solid #d9e3cf; border-radius: 15px; background: rgba(255,255,255,.7); }
+.sidebar-help > svg { margin-bottom: 10px; color: #6f8f28; }
+.sidebar-help strong { display: block; font-size: 12px; }
+.sidebar-help p { margin: 6px 0 12px; color: #72806c; font-size: 10px; line-height: 1.5; }
+.sidebar-help button { padding: 0; border: 0; color: #345487; background: transparent; font-size: 10px; font-weight: 750; }
+.personnel-logout { height: 40px; display: flex; align-items: center; gap: 10px; margin-top: 13px; padding: 0 13px; border: 0; border-radius: 10px; color: #6d7769; background: transparent; font-weight: 650; }
+.personnel-logout:hover { color: #98344e; background: #f7e3ea; }
+.personnel-main { min-height: 100vh; margin-left: 250px; }
+.personnel-topbar { position: sticky; top: 0; z-index: 20; min-height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 34px; border-bottom: 1px solid #e0e7d8; background: rgba(248,250,245,.94); backdrop-filter: blur(12px); }
+.topbar-private { display: inline-flex; align-items: center; gap: 7px; color: #6c7867; font-size: 10px; font-weight: 700; }
+.personnel-actions { display: flex; align-items: center; gap: 9px; }
+.personnel-topbar-right { display: flex; align-items: center; gap: 16px; }
+.theme-switcher { display: flex; align-items: center; gap: 3px; padding: 3px; border: 1px solid #dfe6db; border-radius: 11px; background: #fff; }
+.theme-switcher button { height: 29px; display: flex; align-items: center; gap: 5px; padding: 0 8px; border: 0; border-radius: 8px; color: #778273; background: transparent; font-size: 9px; font-weight: 700; }
+.theme-switcher button:hover { color: #0b1830; background: #eef3e7; }
+.theme-switcher button.active { color: #0b1830; background: #b7db50; }
+.personnel-actions > button, .personnel-menu { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #dfe6db; border-radius: 10px; color: #64705f; background: #fff; }
+.personnel-avatar { width: 36px; height: 36px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 50%; color: #fff; background: #0b1830; box-shadow: 0 3px 9px rgba(11,24,48,.14); font-size: 9px; font-weight: 800; }
+.personnel-actions div { display: flex; flex-direction: column; gap: 3px; }
+.personnel-actions strong { font-size: 11px; }
+.personnel-actions small { color: #7c8878; font-size: 9px; }
+.personnel-menu { display: none; }
+.personnel-content { width: min(1120px, calc(100% - 56px)); margin: 0 auto; padding: 42px 0 25px; }
+.personnel-section-title { margin-bottom: 24px; }
+.personnel-section-title > span, .card-kicker { color: #70873b; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.personnel-section-title h1 { margin: 8px 0; font-size: clamp(29px, 4vw, 42px); }
+.personnel-section-title p { max-width: 650px; margin: 0; color: #687464; font-size: 13px; line-height: 1.55; }
+.privacy-banner { display: flex; align-items: center; gap: 13px; margin-bottom: 17px; padding: 14px 17px; border-radius: 13px; color: #0b1830; background: #e5efc9; }
+.privacy-banner > svg { color: #648421; }
+.privacy-banner div { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+.privacy-banner strong { font-size: 11px; }
+.privacy-banner span { color: #637050; font-size: 10px; }
+.privacy-banner button, .text-link { display: flex; align-items: center; gap: 3px; border: 0; color: #345487; background: transparent; font-size: 10px; font-weight: 750; }
+.personnel-overview-grid { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(280px,.8fr); gap: 17px; }
+.personnel-card { border: 1px solid #e0e8da; border-radius: 17px; background: #fff; box-shadow: 0 7px 24px rgba(11,24,48,.035); }
+.checkin-panel { padding: 25px; }
+.card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; }
+.card-heading h2 { margin: 7px 0 0; font-size: 21px; }
+.private-pill, .status-chip, .consent-state { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; border-radius: 99px; color: #58722a; background: #edf4dc; font-size: 9px; font-weight: 750; white-space: nowrap; }
+.card-copy { margin: 13px 0 18px; color: #707c6b; font-size: 11px; line-height: 1.55; }
+.feeling-scale { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+.feeling-scale button { min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; border: 1px solid #dde5d8; border-radius: 12px; color: #657061; background: #f8faf5; }
+.feeling-scale button strong { font-size: 17px; }
+.feeling-scale button span { font-size: 8px; }
+.feeling-scale button:hover, .feeling-scale button.active { border-color: #93b342; color: #0b1830; background: #e5efc9; }
+.note-field, .support-form label { display: flex; flex-direction: column; gap: 7px; margin-top: 18px; color: #485344; font-size: 10px; font-weight: 700; }
+.note-field > span, .support-form label > span { color: #929d8e; font-weight: 500; }
+.note-field textarea, .support-form textarea, .support-form select { width: 100%; border: 1px solid #dce4d8; border-radius: 11px; color: #0b1830; background: #f8faf5; font: 11px Inter, sans-serif; }
+.note-field textarea, .support-form textarea { min-height: 78px; padding: 12px; resize: vertical; }
+.support-form select { height: 42px; padding: 0 11px; }
+.checkin-actions { display: flex; align-items: center; gap: 13px; margin-top: 15px; }
+.checkin-actions small { color: #83907e; font-size: 8px; }
+.personnel-primary, .personnel-secondary { min-height: 39px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 16px; border-radius: 99px; font-size: 10px; font-weight: 750; }
+.personnel-primary { border: 1px solid #0b1830; color: #fff; background: #0b1830; }
+.personnel-secondary { border: 1px solid #cdd7c8; color: #0b1830; background: #fff; }
+.personnel-side-stack { display: flex; flex-direction: column; gap: 17px; }
+.next-appointment, .quick-support { flex: 1; padding: 20px; }
+.side-icon, .library-icon { width: 37px; height: 37px; display: grid; place-items: center; margin-bottom: 15px; border-radius: 11px; color: #0b1830; background: #e1efbd; }
+.next-appointment h3, .quick-support h3 { margin: 8px 0 6px; font-size: 15px; }
+.next-appointment p, .quick-support p { margin: 0 0 10px; color: #6e7a69; font-size: 10px; line-height: 1.5; }
+.appointment-place { display: block; margin-bottom: 13px; color: #8a9685; font-size: 9px; }
+.next-appointment > button { display: flex; align-items: center; gap: 3px; padding: 0; border: 0; color: #345487; background: transparent; font-size: 10px; font-weight: 750; }
+.resource-preview { margin-top: 17px; padding: 22px; }
+.resource-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 17px; }
+.resource-row > button { display: flex; align-items: center; gap: 11px; padding: 13px; border: 1px solid #e1e8dc; border-radius: 12px; color: #0b1830; background: #f8faf5; text-align: left; }
+.resource-row > button > span { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 10px; background: #e7efd8; }
+.resource-row button div { min-width: 0; flex: 1; }
+.resource-row strong { font-size: 10px; }
+.resource-row p { margin: 3px 0; color: #758171; font-size: 8px; line-height: 1.35; }
+.resource-row small { color: #9aa496; font-size: 8px; }
+.personnel-two-column { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(280px,.7fr); gap: 17px; }
+.support-form, .reassurance-card { padding: 24px; }
+.support-form label:first-child { margin-top: 0; }
+.support-form .personnel-primary { margin-top: 18px; }
+.reassurance-card > svg { color: #6f8f28; }
+.reassurance-card h3 { margin: 14px 0; }
+.reassurance-card ol { padding-left: 18px; color: #657161; font-size: 11px; line-height: 1.8; }
+.reassurance-card > div { display: flex; align-items: flex-start; gap: 9px; margin-top: 20px; padding: 13px; border-radius: 11px; background: #f7e9ed; }
+.reassurance-card > div span { display: flex; flex-direction: column; gap: 4px; color: #75545d; font-size: 9px; line-height: 1.45; }
+.appointment-list { display: flex; flex-direction: column; gap: 13px; }
+.appointment-item, .empty-appointment { display: flex; align-items: center; gap: 17px; padding: 20px; }
+.date-block { width: 58px; height: 62px; display: grid; place-items: center; padding: 8px; border-radius: 12px; background: #e5efc9; }
+.date-block strong { font-size: 23px; line-height: 1; }.date-block small { font-size: 8px; font-weight: 800; }
+.appointment-item > div { flex: 1; }.appointment-item h3, .empty-appointment h3 { margin: 8px 0 5px; font-size: 15px; }.appointment-item p, .empty-appointment p { display: flex; align-items: center; gap: 6px; margin: 0; color: #748070; font-size: 10px; }
+.empty-appointment > div { flex: 1; }.empty-appointment > svg { color: #718c34; }
+.resource-library, .privacy-grid-personnel { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.resource-library article, .privacy-grid-personnel article { padding: 20px; }
+.resource-library article > small { float: right; color: #919c8d; font-size: 8px; }.resource-library h3, .privacy-grid-personnel h3 { margin: 14px 0 7px; font-size: 14px; }.resource-library p, .privacy-grid-personnel p { min-height: 46px; margin: 0; color: #6e7a69; font-size: 10px; line-height: 1.5; }.resource-library button { display: flex; align-items: center; gap: 3px; margin-top: 14px; padding: 0; border: 0; color: #345487; background: transparent; font-size: 9px; font-weight: 750; }
+.privacy-grid-personnel article > span { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 11px; background: #e5efc9; }
+.consent-card { display: flex; align-items: center; gap: 20px; margin-top: 14px; padding: 22px; }.consent-card > div { flex: 1; }.consent-card h2 { margin: 7px 0; font-size: 18px; }.consent-card p { margin: 0; color: #6e7a69; font-size: 10px; }.consent-state { color: #7b5360; background: #f7e3ea; }
+.personnel-footer { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 35px; color: #879283; font-size: 9px; }
+.personnel-scrim { display: none; }
+.personnel-shell.theme-dark { color: #e8eef5; background: #0d1522; }
+.theme-dark .personnel-sidebar { border-color: #263449; background: #111b2b; }
+.theme-dark .personnel-brand > span { background: #e8eef5; }
+.theme-dark .personnel-brand strong, .theme-dark .personnel-sidebar nav button { color: #cbd5e1; }
+.theme-dark .personnel-brand small, .theme-dark .personnel-sidebar nav button:not(.active) { color: #8e9aaa; }
+.theme-dark .personnel-sidebar nav button:hover { color: #eef4f8; background: #1b293d; }
+.theme-dark .personnel-sidebar nav button.active { color: #0b1830; background: #b7db50; }
+.theme-dark .sidebar-help { border-color: #2a3a4f; background: #172438; }
+.theme-dark .sidebar-help p, .theme-dark .personnel-logout { color: #98a5b4; }
+.theme-dark .personnel-logout:hover { color: #f2b8c5; background: #3b2330; }
+.theme-dark .personnel-main { background: #0d1522; }
+.theme-dark .personnel-topbar { border-color: #263449; background: rgba(13,21,34,.94); }
+.theme-dark .topbar-private, .theme-dark .personnel-actions small { color: #97a5b5; }
+.theme-dark .personnel-actions > button, .theme-dark .personnel-menu, .theme-dark .theme-switcher { border-color: #2b3a4f; color: #bec9d5; background: #152235; }
+.theme-dark .theme-switcher button { color: #97a5b5; }
+.theme-dark .theme-switcher button:hover { color: #eef4f8; background: #223149; }
+.theme-dark .theme-switcher button.active { color: #0b1830; background: #b7db50; }
+.theme-dark .personnel-section-title p, .theme-dark .card-copy, .theme-dark .next-appointment p, .theme-dark .quick-support p, .theme-dark .appointment-place, .theme-dark .resource-row p, .theme-dark .resource-row small, .theme-dark .reassurance-card ol, .theme-dark .appointment-item p, .theme-dark .empty-appointment p, .theme-dark .resource-library p, .theme-dark .privacy-grid-personnel p, .theme-dark .consent-card p { color: #9aa8b8; }
+.theme-dark .personnel-section-title h1 { color: #e8eef5 !important; }
+.theme-dark .personnel-card { border-color: #29384d; background: #152235; box-shadow: none; }
+.theme-dark .privacy-banner { color: #e8eef5; background: #26371e; }
+.theme-dark .privacy-banner span { color: #bdcba8; }
+.theme-dark .private-pill, .theme-dark .status-chip { color: #c9dfa0; background: #2b3d21; }
+.theme-dark .feeling-scale button, .theme-dark .resource-row > button { border-color: #304057; color: #aeb9c6; background: #101a2a; }
+.theme-dark .feeling-scale button:hover, .theme-dark .feeling-scale button.active { border-color: #9abd45; color: #eaf2dc; background: #26371e; }
+.theme-dark .note-field, .theme-dark .support-form label { color: #c5d0dc; }
+.theme-dark .note-field textarea, .theme-dark .support-form textarea, .theme-dark .support-form select { border-color: #304057; color: #e8eef5; background: #101a2a; }
+.theme-dark .personnel-secondary { border-color: #3b4a5f; color: #e5ecf3; background: #18263a; }
+.theme-dark .next-appointment h3, .theme-dark .quick-support h3, .theme-dark .resource-row strong, .theme-dark .appointment-item h3, .theme-dark .empty-appointment h3, .theme-dark .resource-library h3, .theme-dark .privacy-grid-personnel h3, .theme-dark .consent-card h2 { color: #e8eef5; }
+.theme-dark .reassurance-card > div { background: #3a2330; }
+.theme-dark .reassurance-card > div span { color: #e1b9c3; }
+.theme-dark .date-block, .theme-dark .side-icon, .theme-dark .library-icon, .theme-dark .privacy-grid-personnel article > span, .theme-dark .resource-row > button > span { color: #d8edaa; background: #293c21; }
+.theme-dark .consent-state { color: #e5b5c2; background: #3b2330; }
+.theme-dark .personnel-footer { color: #7f8c9b; }
+@media (max-width: 950px) { .personnel-sidebar { transform: translateX(-100%); transition: transform .2s ease; }.personnel-sidebar.open { transform: translateX(0); }.personnel-brand > button { display: grid; }.personnel-main { margin-left: 0; }.personnel-menu { display: grid; }.personnel-scrim { position: fixed; inset: 0; z-index: 25; display: block; border: 0; background: rgba(11,24,48,.36); }.resource-row, .resource-library, .privacy-grid-personnel { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 720px) { .personnel-topbar { padding: 0 17px; }.personnel-actions div { display: none; }.theme-switcher button span { display: none; }.theme-switcher button { width: 29px; justify-content: center; padding: 0; }.personnel-topbar-right { gap: 8px; }.personnel-content { width: calc(100% - 30px); padding-top: 28px; }.personnel-overview-grid, .personnel-two-column { grid-template-columns: 1fr; }.resource-row, .resource-library, .privacy-grid-personnel { grid-template-columns: 1fr; }.feeling-scale { grid-template-columns: repeat(5, minmax(52px,1fr)); overflow-x: auto; }.privacy-banner { align-items: flex-start; flex-wrap: wrap; }.privacy-banner button { margin-left: 33px; }.appointment-item, .empty-appointment { align-items: flex-start; flex-wrap: wrap; }.appointment-item .personnel-secondary, .empty-appointment .personnel-primary { margin-left: auto; }.checkin-actions { align-items: flex-start; flex-direction: column; } }

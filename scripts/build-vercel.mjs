@@ -41,6 +41,22 @@ copyBuild(
 );
 copyBuild(
   path.join(root, "apps/welfare-dashboard/dist/public"),
+run(npm, ["run", "build"], path.join(root, "capf-welfare-triage/dashboard"));
+run(npm, ["run", "build"], path.join(root, "commander_dashboard/Login design"));
+run(
+  npm,
+  ["run", "build:client"],
+  path.join(root, "capf-welfare-dashboard-final/capf-welfare-dashboard"),
+);
+
+rmSync(output, { recursive: true, force: true });
+copyBuild(path.join(root, "capf-welfare-triage/dashboard/dist"), output);
+copyBuild(
+  path.join(root, "commander_dashboard/Login design/dist"),
+  path.join(output, "commander"),
+);
+copyBuild(
+  path.join(root, "capf-welfare-dashboard-final/capf-welfare-dashboard/dist/public"),
   path.join(output, "welfare"),
 );
 

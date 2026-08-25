@@ -26,4 +26,10 @@ run(
   pnpm,
   ["install", "--frozen-lockfile"],
   path.join(root, "apps/welfare-dashboard"),
+run(npm, ["ci"], path.join(root, "capf-welfare-triage/dashboard"));
+run(npm, ["ci"], path.join(root, "commander_dashboard/Login design"));
+run(
+  pnpm,
+  ["install", "--frozen-lockfile"],
+  path.join(root, "capf-welfare-dashboard-final/capf-welfare-dashboard"),
 );
