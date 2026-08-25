@@ -5,6 +5,7 @@
   "outputDirectory": "dist",
   "functions": {
     "api/index.py": {
+      "includeFiles": "data/synthetic_data.sqlite3",
       "includeFiles": "capf-welfare-triage/data/synthetic_data.sqlite3",
       "maxDuration": 10
     }

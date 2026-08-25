@@ -20,6 +20,12 @@ function run(command, args, cwd = root) {
   }
 }
 
+run(npm, ["ci"], path.join(root, "dashboard"));
+run(npm, ["ci"], path.join(root, "apps/commander-dashboard"));
+run(
+  pnpm,
+  ["install", "--frozen-lockfile"],
+  path.join(root, "apps/welfare-dashboard"),
 run(npm, ["ci"], path.join(root, "capf-welfare-triage/dashboard"));
 run(npm, ["ci"], path.join(root, "commander_dashboard/Login design"));
 run(

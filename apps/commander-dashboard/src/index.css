@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-canvas: #F8FAF5;
+    --surface-primary: #FFFFFF;
+    --surface-secondary: #F1F5E9;
+    --surface-elevated: #F8FAF5;
+    --border-color: #E0E7D8;
+    --text-primary: #0B1830;
+    --text-secondary: #667085;
+    --text-muted: #89947F;
+    --accent-sage: #70873B;
+    --accent-sage-light: #E1EFBD;
+    --status-stable: #70873B;
+    --status-info: #4A7B9D;
+    --status-attention: #C58A2B;
+    --status-critical: #C85A54;
+    color-scheme: light;
+  }
+
+  .dark {
+    --bg-canvas: #0D1522;
+    --surface-primary: #152235;
+    --surface-secondary: #101A2A;
+    --surface-elevated: #1B293D;
+    --border-color: #29384D;
+    --text-primary: #E8EEF5;
+    --text-secondary: #9AA8B8;
+    --text-muted: #7F8C9B;
+    --accent-sage: #C9DFA0;
+    --accent-sage-light: #26371E;
+    --status-stable: #C9DFA0;
+    --status-info: #7F9EAE;
+    --status-attention: #C4A56A;
+    --status-critical: #C77A7A;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+  }
+}
+
+.commander-shell {
+  background-image:
+    linear-gradient(rgba(11, 24, 48, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 24, 48, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.dark .commander-shell {
+  background-image:
+    linear-gradient(rgba(232, 238, 245, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 238, 245, 0.035) 1px, transparent 1px);
+}
+
+/* Smooth transitions for theme switching */
+.theme-transition {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, fill 250ms ease, stroke 250ms ease;
+}
+
+/* Background Atmosphere Patterns */
+.bg-subtle-grid {
+  background-image: 
+    linear-gradient(to right, rgba(17, 18, 20, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 18, 20, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

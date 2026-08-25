@@ -4,6 +4,10 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
 .pnpm-store/
 dist/
 build/

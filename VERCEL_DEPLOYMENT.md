@@ -1,5 +1,6 @@
 # Vercel deployment
 
+This repository deploys the Login, Commander, Welfare, and Personnel views as one Vercel project and one public origin.
 This repository now deploys the Login, Commander, Welfare, and Personnel views as one Vercel project and one public origin.
 
 ## Routes
@@ -11,6 +12,12 @@ This repository now deploys the Login, Commander, Welfare, and Personnel views a
 - `/api/login` — Demo authentication function
 - `/api/health` — API health check
 
+## Deploy
+
+1. Import this repository into Vercel.
+2. Keep the project Root Directory at the repository root.
+3. Add a `JWT_SECRET` environment variable with a long random value in Production, Preview, and Development.
+4. Deploy. Vercel reads `vercel.json` and assembles all frontend projects into `dist/` automatically.
 ## Deploy from this computer
 
 1. Open a terminal in the `Login_Page` folder containing `vercel.json`.

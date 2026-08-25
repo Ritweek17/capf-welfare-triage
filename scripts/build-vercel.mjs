@@ -29,6 +29,18 @@ function copyBuild(source, destination) {
   cpSync(source, destination, { recursive: true });
 }
 
+run(npm, ["run", "build"], path.join(root, "dashboard"));
+run(npm, ["run", "build"], path.join(root, "apps/commander-dashboard"));
+run(npm, ["run", "build:client"], path.join(root, "apps/welfare-dashboard"));
+
+rmSync(output, { recursive: true, force: true });
+copyBuild(path.join(root, "dashboard/dist"), output);
+copyBuild(
+  path.join(root, "apps/commander-dashboard/dist"),
+  path.join(output, "commander"),
+);
+copyBuild(
+  path.join(root, "apps/welfare-dashboard/dist/public"),
 run(npm, ["run", "build"], path.join(root, "capf-welfare-triage/dashboard"));
 run(npm, ["run", "build"], path.join(root, "commander_dashboard/Login design"));
 run(
