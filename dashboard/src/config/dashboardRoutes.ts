@@ -1,11 +1,11 @@
 import type { UserRole } from "../types/auth";
 
 const DEFAULT_COMMANDER_DASHBOARD_URL =
-  "http://localhost:5174/#commander";
+  "/commander/#commander";
 const DEFAULT_WELFARE_DASHBOARD_URL =
-  "http://localhost:3000/";
+  "/welfare/";
 const DEFAULT_PERSONNEL_DASHBOARD_URL =
-  "http://localhost:3000/personnel";
+  "/welfare/personnel";
 
 const dashboardUrls: Partial<Record<UserRole, string>> = {
   COMMANDER:

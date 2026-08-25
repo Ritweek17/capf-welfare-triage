@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm run install:apps",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "data/synthetic_data.sqlite3",
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    { "source": "/commander/:path*", "destination": "/commander/index.html" },
+    { "source": "/welfare/:path*", "destination": "/welfare/index.html" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ]
+}
